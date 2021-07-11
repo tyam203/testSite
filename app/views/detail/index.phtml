@@ -1,0 +1,16 @@
+<h2><?= $hotelName; ?></h2>
+<div class="text-center">
+<img src="images/<?= $hotelImages; ?>" width="480px" height="360px">
+</div>
+<hr>
+<?php foreach($rooms as $room): ?>
+<ul class="border list-unstyled">
+<li>
+<h3><?= $room->room_type; ?></h3>
+<h4>料金:<?= $room->price; ?>円～</h4>
+</li>
+<?= $this->tag->form(["detail", "method" => "get"]); ?>
+<button type="submit" class="btn btn-primary">予約する</button>
+</form>
+</ul>
+<?php endforeach; ?>

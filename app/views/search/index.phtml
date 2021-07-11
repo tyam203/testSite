@@ -1,0 +1,38 @@
+<h2>検索条件</h2>
+<table class="table table-bordered table-hover">
+<thead class="thead-light">
+<tr>
+    <th>都道府県</th>
+    <th>泊数</th>
+    <th>人数</th>
+    <th>人数</th>
+</tr>
+</thead>
+<tbody>
+    <tr>
+        <td><?= $prefecture; ?></td>
+        <td><?= $checkInDate; ?></td>
+        <td><?= $stayCount; ?>泊</td>
+        <td><?= $personCount; ?>名</td>
+    </tr>
+</tbody>
+</table>
+<button type="submit" class="btn btn-primary" onclick="history.back()">検索条件を変更する</button>
+
+<hr>
+<br>
+
+<?php foreach($hotels as $hotel): ?>
+<ul class="border list-unstyled">
+<li>
+<h3><?= $hotel->hotelName; ?></h3>
+<h4>料金:<?= $hotel->price; ?>円～</h4>
+<img src="images/<?= $hotel->hotelImages; ?>" width="240px" height="180px">
+</li>
+<?= $this->tag->form(["detail", "method" => "get"]); ?>
+<input type="hidden" name="hotelId" value="<?= $hotel->hotel_id; ?>">
+<input type="hidden" name="checkInDate" value="<?= $checkInDate; ?>">
+<button type="submit" class="btn btn-primary">部屋タイプ一覧を見る</button>
+<?= $this->tag->endForm(); ?>
+</ul>
+<?php endforeach; ?>

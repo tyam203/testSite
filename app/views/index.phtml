@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ホテル予約サイト</title>
+    <meta name="description">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+		<h1 class=><a href="index">ホテル予約サイト</a></h1>
+        <div class="text-right">
+        <?php echo $this->tag->linkTo(["signup", "新規登録", 'class' => 'btn btn-primary']); ?>
+        <?php echo $this->tag->linkTo(["login", "ログイン", 'class' => 'btn btn-primary']); ?>
+        </div>
+</header>
+<div class="container">
+    <?php echo $this->getContent(); ?>
+</div>
+</body>
+</html>

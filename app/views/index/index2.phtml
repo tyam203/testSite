@@ -1,0 +1,100 @@
+<div class="search-contain">
+    <div class="search-contain__inner">
+      <form method="GET" action="/search/" id="searchForm">
+        <input type="hidden" name="isAutoSelect" value="true">
+        <input type="hidden" name="checkInDate">
+        <input type="hidden" name="checkOutDate">
+        <h3 class="search-contain__title">国内宿泊（ホテル・旅館）検索・予約</h3>
+        <section class="search-content__block js-search-container is-show">
+          <div class="show-content__fields">
+            <!--<div class="content__fields__inner">-->
+            <!-- show-content__fields--col -->
+            <div class="show-content__fields--col">
+              <div id="stayarea" class="content-fields__inner fields-optional__area">
+                <div class="form-container" name="hotelForm">
+                  <div class="dropdown-wrapper show-content__fields--col">
+                    <!-- <p class="form-error">都道府県を選択してください</p> -->
+                    <div class="area-select-group select-group-prefecture js-dropdown-trigger js-modal-body-add is-error" name="prefectureSelectGroup">
+                      <p class="select-group-title">宿泊都道府県<span class="must-select-item">必須</span></p>
+                      <span class="js-stayarea-val" id="stayPrefecture" data-val="">
+                                                  選択必須
+                                              </span>
+                      <input type="hidden">
+                    </div>
+                    <div class="dropdown-window dropdown-window-prefecture js-dropdown-window js-modal-body-add">
+                      <!-- モーダルヘッダー -->
+                      <h3 class="number-modal__title">宿泊都道府県<span class="js-dropdown-trigger-close"></span></h3>
+                      <div class="dropdown-body js-list-stayarea js-list-stayarea-prefecture">
+                        <!--<label><input class="" type="radio">指定なし</label>-->
+                        <label class="is-checked" ><input name="prefecture" class="is-checked" type="radio" value="" checked>必須選択</label>
+                                                                              <label><input type="radio" name="prefecture" class="" value="1" data-name="北海道">北海道</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="2" data-name="青森県">青森県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="3" data-name="岩手県">岩手県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="4" data-name="宮城県">宮城県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="5" data-name="秋田県">秋田県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="6" data-name="山形県">山形県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="7" data-name="福島県">福島県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="8" data-name="茨城県">茨城県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="9" data-name="栃木県">栃木県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="10" data-name="群馬県">群馬県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="11" data-name="埼玉県">埼玉県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="12" data-name="千葉県">千葉県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="13" data-name="東京都">東京都</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="14" data-name="神奈川県">神奈川県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="15" data-name="新潟県">新潟県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="16" data-name="富山県">富山県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="17" data-name="石川県">石川県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="18" data-name="福井県">福井県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="19" data-name="山梨県">山梨県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="20" data-name="長野県">長野県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="21" data-name="岐阜県">岐阜県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="22" data-name="静岡県">静岡県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="23" data-name="愛知県">愛知県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="24" data-name="三重県">三重県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="25" data-name="滋賀県">滋賀県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="26" data-name="京都府">京都府</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="27" data-name="大阪府">大阪府</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="28" data-name="兵庫県">兵庫県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="29" data-name="奈良県">奈良県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="30" data-name="和歌山県">和歌山県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="31" data-name="鳥取県">鳥取県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="32" data-name="島根県">島根県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="33" data-name="岡山県">岡山県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="34" data-name="広島県">広島県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="35" data-name="山口県">山口県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="36" data-name="徳島県">徳島県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="37" data-name="香川県">香川県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="38" data-name="愛媛県">愛媛県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="39" data-name="高知県">高知県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="40" data-name="福岡県">福岡県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="41" data-name="佐賀県">佐賀県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="42" data-name="長崎県">長崎県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="43" data-name="熊本県">熊本県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="44" data-name="大分県">大分県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="45" data-name="宮崎県">宮崎県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="46" data-name="鹿児島県">鹿児島県</label>
+                                                                                                        <label><input type="radio" name="prefecture" class="" value="47" data-name="沖縄県">沖縄県</label>
+                                                                          <input type="hidden">
+                      </div>
+                    </div>
+                  </div>
+                                    <div class="dropdown-wrapper show-content__fields--col">
+                    <div class="area-select-group select-group-district js-dropdown-trigger" name="areaSelectGroup">
+                      <p class=" select-group-title">宿泊エリア<span class="must-select-item">必須</span></p>
+                      <span class="js-stayarea-val" id="stayDistrict" data-val="" name="stayArea">
+                                                  選択必須
+                                              </span>
+                      <input type="hidden">
+                    </div>
+                    <div class="dropdown-window js-dropdown-window js-modal-body-add">
+                      <!-- モーダルヘッダー -->
+                      <h3 class="number-modal__title">宿泊エリア<span class="js-dropdown-trigger-close"></span></h3>
+                      <div class="dropdown-body js-list-stayarea js-list-stayarea-area" name="areaList">
+                        <!--<label><input class="" type="radio">指定なし</label>-->
+                        <label class="is-checked" ><input class="is-checked" type="radio" value="" name="area" checked>必須選択</label>
+                                                <input type="hidden">
+                      </div>
+                    </div>
+                  </div>
+                                  </div>
+              </div>

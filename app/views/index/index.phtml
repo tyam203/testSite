@@ -1,0 +1,67 @@
+<h2>ホテル検索</h2>
+    <?= $this->tag->form(["search", "method" => "get"]); ?>
+        <div class="form-group">
+            <label>都道府県</label>
+            <select name="prefectureId" class="form-control">
+            <?php foreach ($prefectures as $prefecture) : ?>
+                    <option value="<?= $prefecture->prefectureId ?>"><?= $prefecture->prefectureName ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>チェックイン</label>
+            <?php echo $this->tag->dateField(array('checkInDate', 'class' =>'form-control')); ?>
+            <!-- <input type="date" class="form-control" name="checkInDate"> -->
+            <!-- <input type="date" class="form-control" name="checkInDate" min="<?= date('Y-m-d', strtotime('+3 day')); ?>"> -->
+        </div>
+
+        <div class="form-group">
+            <label>泊数</label>
+            <?php $options = array('1' => '1泊'); ?>
+            <?php echo $this->tag->selectStatic(array('stayCount', $options, 'class' =>'form-control')); ?>
+            </select>
+        </div>
+
+        <!-- <div class="form-group">
+            <label>泊数</label>
+            <select name="stayCount" class="form-control">
+            <?php makeOptions(1, 5, '泊') ?>
+            </select>
+        </div> -->
+
+        <div class="form-group">
+            <label>人数</label>
+            <select class="form-control" name="personCount">
+                <?php makeOptions(1, 6, '名') ?>
+            </select>
+        </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">検索する</button>
+    </form>
+
+<?php if ($prefectures->count() > 0): ?>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>hotelName</th>
+            <th>prefectureId</th>
+            <th>prefectureName</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="3">Hotels quantity: <?php echo $prefectures->count(); ?></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <?php foreach ($prefectures as $prefecture) : ?>
+            <tr>
+                <td><?php echo $prefecture->hotelName; ?></td>
+                <td><?php echo $prefecture->prefectureId; ?></td>
+                <td><?php echo $prefecture->prefectureName; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>

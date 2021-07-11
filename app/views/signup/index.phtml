@@ -1,0 +1,38 @@
+<h1>新規会員登録</h1>
+
+<?php echo $this->tag->form("signup/register"); ?>
+    <dl>
+        <dt>氏名</dt>
+        <dd>
+        <?php echo $this->tag->textField("name"); ?>
+        </dd>
+
+        <dt>生年月日</dt>
+        <dd>
+        <?php echo $this->tag->dateField(array('birthday', 'value' =>'2000-01-01', 'min' => '1950-01-01')); ?>
+        </dd>
+
+        <dt>性別</dt>
+        <dd>
+        <?php $options = array('1' => '男性', '2' => '女性'); ?>
+        <?php echo $this->tag->selectStatic(array('gender', $options)); ?>
+
+        </dd>
+
+        <dt>メールアドレス</dt>
+        <dd>
+        <?php echo $this->tag->emailField("email"); ?>
+        </dd>
+
+        <dt>電話番号</dt>
+        <dd>
+        <?php echo $this->tag->numericField("tel"); ?>
+        </dd>
+
+        <dt>パスワード</dt>
+        <dd>
+        <?php echo $this->tag->passwordField("password"); ?>
+        </dd>
+    </dl>
+    <?php echo $this->tag->submitButton("登録"); ?>
+</form>
