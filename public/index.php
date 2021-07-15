@@ -75,12 +75,15 @@ $container->set(
         );
     }
 );
+// session_start();
 
 $session = new Manager();
 $files = new Stream(
     [
         // 'savePath' => 'N;MODE;/path',
-        'savePath' => '/tmp',
+        'savePath' => 'C:\php72\tmp',
+        // 'savePath' => '/tmp',
+
     ]
 );
 $session->setAdapter($files);

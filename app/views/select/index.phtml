@@ -1,0 +1,50 @@
+<div class="container border-bottom">
+    <h2>予約を確定する</h2>
+    <p>ログインまたは、新規会員登録を行いお申し込みにお進みください。</p>
+</div>
+
+
+<div class="row">
+    <div class="col border p-5">
+        <?php echo $this->tag->form("select/check"); ?>
+        <!-- <form action="/auth/auth/" method="post" autocomplete="off" class="l_width50per" novalidate> -->
+            <h3>会員登録がお済みのお客様</h3>
+            <p>会員のログインID/パスワードでログインしてください。</p>
+            <p>
+              <label for="email">メールアドレス</label>
+              <?php echo $this->tag->textField("email"); ?>
+            </p>
+          
+          <p>
+              <label for="password">パスワード</label>
+              <?php echo $this->tag->passwordField("password"); ?>
+          </p>
+
+                <div class="mt-3">
+                <button class="btn btn-warning">ログインする</button>
+                </div>
+        </form>
+    </div>
+
+    <div class="col border p-5">
+            <h3 class=>新規会員登録するお客様</h3>
+                <p>予約と同時に新規登録を行ってください。</p>
+            <div class="mb-5">
+            <a href="../signup">
+            <!-- <a href="/member/input/?ini=true&n=i"> -->
+                <button class="btn btn-warning">会員登録して予約</button>
+            </a>
+            </div>
+            <p>16歳未満の方は会員登録・お申し込みはできません。</p>
+            <p>未成年の方は会員登録・お申し込みはできますが、予約内容によって保護者の方の同意書が必要になります。</p>
+    </div>
+</div>
+
+  <div class="md_notice_box">
+    <h4 style="color: #ff0000">現段階では予約はまだ確定しておりません。</h4>
+    <p>表示されている空室状況と代金は一定時間ごとに更新されます。予約途中でも金額が変更、満室になる場合がございます。</p>
+    <p>予約完了段階では旅行契約は成立しておらずお支払い完了をもって旅行契約の成立となります。</p>
+  </div>
+<section class="md_back">
+  <a class="left_arrow" href="/search/select/">戻る</a>
+</section>

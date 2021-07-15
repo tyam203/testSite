@@ -1,38 +1,49 @@
-<h2>検索条件</h2>
+<h2>検索結果</h2>
+<div class="text-center w-50 m-auto">
+<h3>検索条件</h3>
 <table class="table table-bordered table-hover">
-<thead class="thead-light">
-<tr>
-    <th>都道府県</th>
-    <th>泊数</th>
-    <th>人数</th>
-    <th>人数</th>
-</tr>
-</thead>
-<tbody>
-    <tr>
-        <td><?= $prefecture; ?></td>
-        <td><?= $checkInDate; ?></td>
-        <td><?= $stayCount; ?>泊</td>
-        <td><?= $personCount; ?>名</td>
-    </tr>
-</tbody>
+    <thead class="thead-light">　
+        <tr>
+            <th>都道府県</th>
+            <td><?= $prefecture; ?></td>
+        </tr>
+        <tr>
+            <th>宿泊日</th>
+            <td><?= date('Y年n月j日', strtotime($checkInDate)); ?></td>
+        </tr>
+        <tr>
+            <th>泊数</th>
+            <td><?= $stayCount; ?>泊</td>
+        </tr>
+        <tr>
+            <th>人数</th>
+            <td><?= $personCount; ?>名</td>
+        </tr>
+    </thead>
 </table>
-<button type="submit" class="btn btn-primary" onclick="history.back()">検索条件を変更する</button>
+<?= $this->tag->linkTo(["/", "検索条件変更", 'class' => 'btn btn-primary mr-1']) ?>
+</div>
 
-<hr>
-<br>
 
-<?php foreach($hotels as $hotel): ?>
-<ul class="border list-unstyled">
-<li>
-<h3><?= $hotel->hotelName; ?></h3>
-<h4>料金:<?= $hotel->price; ?>円～</h4>
-<img src="images/<?= $hotel->hotelImages; ?>" width="240px" height="180px">
-</li>
-<?= $this->tag->form(["detail", "method" => "get"]); ?>
-<input type="hidden" name="hotelId" value="<?= $hotel->hotel_id; ?>">
-<input type="hidden" name="checkInDate" value="<?= $checkInDate; ?>">
-<button type="submit" class="btn btn-primary">部屋タイプ一覧を見る</button>
-<?= $this->tag->endForm(); ?>
-</ul>
-<?php endforeach; ?>
+<div class="container mt-3">
+    <?php foreach($hotels as $hotel): ?>
+    <?php if (!empty($hotel)): ?>
+        <ul class="border list-unstyled">
+            <li class="p-3 text-center">
+                <h4><?= $hotel->hotelName; ?></h4>
+                <h5>料金：<?= $hotel->price; ?>円～</h5>
+                <img src="images/<?= $hotel->hotelImages; ?>" width="360px" height="270px">
+                <?= $this->tag->form(["detail", "method" => "get"]); ?>
+                <input type="hidden" name="hotelId" value="<?= $hotel->hotel_id; ?>">
+                <input type="hidden" name="checkInDate" value="<?= $checkInDate; ?>">
+                <input type="hidden" name="stayCount" value="<?= $stayCount; ?>">
+                <input type="hidden" name="personCount" value="<?= $personCount; ?>">
+                <button type="submit" class="btn btn-primary mt-3">部屋タイプ一覧を見る</button>
+                <?= $this->tag->endForm(); ?>
+            </li>
+        </ul>
+    <?php else: ?>
+    <?= '該当なし' ?>
+    <?php endif; ?>
+    <?php endforeach; ?>
+</div>    

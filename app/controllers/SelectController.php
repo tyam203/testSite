@@ -3,7 +3,7 @@ use Phalcon\Mvc\Controller;
 
 
 
-class LoginController extends Controller
+class SelectController extends Controller
 {
     public function indexAction()
     {
@@ -27,7 +27,7 @@ class LoginController extends Controller
                 $_SESSION['name'] = $user->name;
             }
         }     
-        header('Location: ../');
+        header('Location: ../form');
         
     }
 }

@@ -10,12 +10,15 @@ class SearchController extends Controller
         $personCount = $this->request->get('personCount');
         $checkInDate = $this->request->get('checkInDate');
         $stayCount = $this->request->get('stayCount');
-        $checkOutDate = date('Y-m-d', strtotime($checkInDate . '+' . $stayCount . 'day'));
-        $checkOutBefore = date('Y-m-d', strtotime($checkOutDate . '-1day'));
+        $personCount = $this->request->get('personCount');
 
-
-        // $builder = new Builder();
-        // $hotel
+        $prefecture = Hotels::findFirst(
+            [
+                "prefectureId = '$prefectureId'",
+            ]
+            );
+        $this->view->prefecture = $prefecture->prefectureName;
+        
             $hotels = $this
             ->modelsManager
             ->createBuilder()
@@ -30,8 +33,6 @@ class SearchController extends Controller
                 ]
             )
             ->from(Hotels::class)
-            // ->addFrom(Rooms::class)
-            // ->addFrom(Prices::class)
             ->join(
                 Rooms::class,
                 'Hotels.id = Rooms.hotel_id'
@@ -52,17 +53,21 @@ class SearchController extends Controller
                     'personCount' => $personCount,
                 ]
             )
+            ->andwhere(
+                'date = :checkInDate:',
+                [
+                    'checkInDate' => $checkInDate,
+                ]
+            )
             // ->betweenwhere('Prices.date', $checkInDate, $checkOutBefore)
             ->andwhere('Prices.stock >= 1')
             ->groupBy('hotel_id')
             ->getQuery()
             ->execute();
-         
-        foreach($hotels as $hotel) {
-            $prefecture = $hotel->prefectureName;
-        }
-
-        $this->view->prefecture = $prefecture;
+        
+            // foreach($hotels as $hotel){
+            //     if
+            // }
         $this->view->hotels = $hotels;
         $this->view->checkInDate = $checkInDate;
         $this->view->stayCount = $stayCount;

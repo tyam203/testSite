@@ -30,12 +30,17 @@ class SignupController extends Controller
         $this->view->success = $success;
 
         if($success) {
-            $message = 'Thanks for registering!';
+            $message = '登録完了';
+            $link = $this->tag->linkTo(['/', 'トップページに戻る', 'class' => 'btn btn-primary']);
         } else {
-            $message = 'Sorry, the following problems were generated:<br>'
-                    . implode('<br>', $user->getMessages());
+            $message = '登録に失敗しました:<br>'
+            . implode('<br>', $user->getMessages());
+
+            $link = $this->tag->linkTo(['/signup', '登録ページに戻る', 'class' => 'btn btn-primary']);
+
         }
 
         $this->view->message = $message;
+        $this->view->link = $link;
     }
 }

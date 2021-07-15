@@ -1,16 +1,27 @@
-<h2><?= $hotelName; ?></h2>
-<div class="text-center">
-<img src="images/<?= $hotelImages; ?>" width="480px" height="360px">
+<div class="text-center border m-5 p-3">
+    <h2><?= $hotelName; ?></h2>
+    <div class="text-center">
+        <img src="images/<?= $hotelImages; ?>" width="480px" height="360px">
+    </div>
+    <hr>
+    <?php foreach($rooms as $room): ?>
+        <ul class="border list-unstyled pt-3 text-center">
+            <li>
+                <h3><?= $room->room_type; ?></h3>
+                <h4>料金：<?= $room->price; ?>円～</h4>
+            </li>
+            <?= $this->tag->form(["detail/confirm", "method" => "get"]); ?>
+            <input type="hidden" name="roomId" value="<?= $room->roomId; ?>">
+            <input type="hidden" name="hotelId" value="<?= $_GET['hotelId']; ?>">
+            <input type="hidden" name="checkInDate" value="<?= $_GET['checkInDate']; ?>">
+            <input type="hidden" name="personCount" value="<?= $_GET['personCount']; ?>">
+            <input type="hidden" name="stayCount" value="<?= $_GET['stayCount']; ?>">
+            <button type="submit" class="btn btn-primary mb-3">予約する</button>
+            </form>
+        </ul>
+    <?php endforeach; ?>
 </div>
-<hr>
-<?php foreach($rooms as $room): ?>
-<ul class="border list-unstyled">
-<li>
-<h3><?= $room->room_type; ?></h3>
-<h4>料金:<?= $room->price; ?>円～</h4>
-</li>
-<?= $this->tag->form(["detail", "method" => "get"]); ?>
-<button type="submit" class="btn btn-primary">予約する</button>
-</form>
-</ul>
-<?php endforeach; ?>
+<div class="text-center">
+<input type="button" onclick="history.back()" value="戻る">
+</div>
+<!-- <div class="text-center"><a class="btn btn-warning">戻る</a></div> -->

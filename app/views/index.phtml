@@ -7,15 +7,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<header>
-		<h1 class=><a href="index">ホテル予約サイト</a></h1>
-        <div class="text-right">
-        <?php echo $this->tag->linkTo(["signup", "新規登録", 'class' => 'btn btn-primary']); ?>
-        <?php echo $this->tag->linkTo(["login", "ログイン", 'class' => 'btn btn-primary']); ?>
-        </div>
-</header>
+<header class="bg-primary pt-3 pb-3 mb-3">
+		<h1 class="ml-5"><a href="../index" class="text-light">ホテル予約サイト</a></h1>
+    </header>
+
 <div class="container">
-    <?php echo $this->getContent(); ?>
+
+    <?= $this->getContent(); ?>
 </div>
+
+<footer class="bg-primary p-5 mt-5 mb-2">
+
+</footer>
 </body>
 </html>

@@ -1,19 +1,20 @@
-<h1>ログイン</h1>
-
-<?php echo $this->tag->form("login/check"); ?>
-
+<div class="text-center border m-5 p-3">
+    <h1>ログイン</h1>
+    
+    <?php echo $this->tag->form("login/check"); ?>
+    
     <p>
         <label for="email">メールアドレス</label>
         <?php echo $this->tag->textField("email"); ?>
     </p>
-
+    
     <p>
         <label for="password">パスワード</label>
         <?php echo $this->tag->passwordField("password"); ?>
     </p>
-
+    
     <p>
         <?php echo $this->tag->submitButton("ログイン"); ?>
     </p>
-
 </form>
+</div>
