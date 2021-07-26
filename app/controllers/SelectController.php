@@ -10,24 +10,31 @@ class SelectController extends Controller
     }
     public function checkAction()
     {
-        if ($this->request->isPost()) {
-            $email = $this->request->getPost('email');
-            $password = $this->request->getPost('password');
-            $users = Users::find(
-            // $this->view->users = Users::find(
-                [
-                    "email = '$email'",
-                    "password = '$password'",
-                ]
-                );
-            $this->view->users = $users;
-            $_SESSION['login'] = 'ok';
-            foreach($users as $user) {
+        $post = $this->request->getPost();
+        if ($post['email'] != '' && $post['password'] != '') {
+            $conditions ="email = :email: AND password = :password:";
+            $parameters = array(
+                'email' => $post['email'],
+                'password' => $post['password'],
+            );
+            $user = Users::findFirst(array(
+                $conditions,
+                'bind' => $parameters
+            ));
+            if(isset($user->id)) {
+                $_SESSION['login'] = 'ok';
                 $_SESSION['id'] = $user->id;
                 $_SESSION['name'] = $user->name;
+                header('Location: ../form');
+            }else {
+                $this->view->message = '一致する登録情報がありませんでした';
+                $this->view->link = $this->tag->linkTo(['select', 'ログインページに戻る', 'class' => 'btn btn-primary']);
+                
             }
-        }     
-        header('Location: ../form');
-        
+        } else{
+            $this->view->message = '未記入の項目があります';
+            $this->view->link = $this->tag->linkTo(['select', 'ログインページに戻る', 'class' => 'btn btn-primary']);
+            $this->view->register = $this->tag->linkTo(['register', '新規登録をする', 'class' => 'btn btn-primary']);
+        }
     }
 }

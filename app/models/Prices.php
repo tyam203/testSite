@@ -4,10 +4,9 @@ use Phalcon\Mvc\Model;
 
 class Prices extends Model 
 {
-    public $id;
-    public $roomId;
-    public $date;
-    public $price;
-    public $stock;
+    public function initialize()
+    {
+        $this->setSource('prices');
+    }
 
 }

@@ -30,25 +30,19 @@
         </div>
 
         <p>内訳（大人<?= $personCount?>名）</p>
-        <h4>合計金額：<?= $price?>円</h4>
+        <h4>合計金額：<?= number_format($price)?>円</h4>
         <div class="text-center">
             <?php if(isset($_SESSION['id'])): ?>
             <?= $this->tag->form(["form", "method" => "post"]) ?>
             <?php else: ?>
-            <?= $this->tag->form(["select", "method" => "post"]); ?>
+            <?= $this->tag->form(["select", "method" => "post"]) ?>
             <?php endif; ?>
-            <input type="hidden" name="hotelId" value="<?= $hotelId ?>">
-            <input type="hidden" name="roomId" value="<?= $roomId ?>">
-            <input type="hidden" name="checkInDate" value="<?= $checkInDate ?>">
-            <input type="hidden" name="stayCount" value="<?= $stayCount ?>">
-            <input type="hidden" name="personCount" value="<?= $personCount ?>">
-            <input type="hidden" name="price" value="<?= $price ?>">
-            
             <button type="submit" class="btn btn-warning btn-lg">この内容で申し込む</button>
-        </form>
+            </form>
         </div>  
     </div>
 </div>
+
 <div class="text-center">
 <input type="button" onclick="history.back()" value="戻る">
 </div>

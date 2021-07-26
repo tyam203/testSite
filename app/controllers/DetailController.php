@@ -6,9 +6,7 @@ class DetailController extends Controller
 {
     public function indexAction()
     {
-        $hotelId = $this->request->get('hotelId');
-        $checkInDate = $this->request->get('checkInDate');
-        $personCount = $this->request->get('personCount');
+        $get = $this->request->get();
         $rooms = $this
         ->modelsManager
         ->createBuilder()
@@ -16,6 +14,7 @@ class DetailController extends Controller
             [
                 'hotelName',
                 'room_type',
+                'capacity',
                 'price',
                 'hotelImages',
                 'Rooms.id as roomId'
@@ -32,22 +31,19 @@ class DetailController extends Controller
             )
         ->where(
             'hotel_id = :hotelId:',
-            [
-                'hotelId' => $hotelId,
-            ]
             )
         ->andwhere(
                 'capacity >= :personCount:',
-                [
-                    'personCount' => $personCount,
-                ]
             )
         ->andwhere(
             'date = :checkInDate:',
             [
-                'checkInDate' => $checkInDate,
+                'hotelId' => $get['hotelId'],
+                'personCount' => $get['personCount'],
+                'checkInDate' => $get['checkInDate'],
             ]
             )
+        ->andwhere('Prices.stock >= 1')
         ->getQuery()
         ->execute();
             
@@ -55,18 +51,24 @@ class DetailController extends Controller
             $hotelName = $room->hotelName;
             $hotelImages = $room->hotelImages;
         }
-        $this->view->hotelName = $hotelName;
-        $this->view->hotelImages = $hotelImages;
-        $this->view->rooms = $rooms;    
+        $inCharge = date('Y年n月j日', strtotime($checkInDate . '-8 day')); 
+        $this->view->setVars(
+            [
+                'hotelName' => $hotelName,
+                'hotelImages' => $hotelImages,
+                'hotelId' => $hotelId,
+                'checkInDate' => $checkInDate,
+                'stayCount' => $stayCount,
+                'personCount'=> $personCount,
+                'rooms' => $rooms,
+                'inCharge' => $inCharge,
+            ]
+        );
     }
 
     public function confirmAction()
     {
-        $roomId = $this->request->get('roomId');
-        $hotelId = $this->request->get('hotelId');
-        $checkInDate = $this->request->get('checkInDate');  
-        $personCount = $this->request->get('personCount');  
-        $stayCount = $this->request->get('stayCount');  
+        $get = $this->request->get();
         $rooms = $this
         ->modelsManager
         ->createBuilder()
@@ -89,14 +91,16 @@ class DetailController extends Controller
             )
         ->where(
             'Rooms.id = :roomId:',
-            [
-                'roomId' => $roomId,
-            ]
             )
+        ->andwhere(
+            'capacity >= :personCount:',
+        )
         ->andwhere(
             'date = :checkInDate:',
             [
-                'checkInDate' => $checkInDate,
+                'roomId' => $get['roomId'],
+                'personCount' => $get['personCount'],
+                'checkInDate' => $get['checkInDate'],
             ]
             )
         ->getQuery()
@@ -108,14 +112,22 @@ class DetailController extends Controller
             $price = $room->price;
             $prefectureId = $room->prefectureId;
         }
-        $this->view->hotelId = $hotelId;
-        $this->view->roomId = $roomId;
-        $this->view->prefectureId = $prefectureId;
-        $this->view->hotelName = $hotelName;
-        $this->view->roomType = $roomType;
-        $this->view->price = $price;
-        $this->view->checkInDate = $checkInDate; 
-        $this->view->personCount = $personCount; 
-        $this->view->stayCount = $stayCount; 
+        $this->view->setVars(
+            [
+                'hotelId' => $get['hotelId'],
+                'roomId' => $get['roomId'],
+                'checkInDate' => $get['checkInDate'],
+                'personCount' => $get['personCount'],
+                'stayCount' => $get['stayCount'],
+                'prefectureId' => $prefectureId,
+                'hotelName' => $hotelName,
+                'roomType' => $roomType,
+                'price' => $price,
+            ]
+        );
+        $_SESSION['roomId'] = $get['roomId'];
+        $_SESSION['checkInDate'] = $get['checkInDate'];
+        $_SESSION['personCount'] = $get['personCount'];
+        $_SESSION['stayCount'] = $get['stayCount'];
     }
 } 

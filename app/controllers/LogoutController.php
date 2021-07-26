@@ -9,12 +9,13 @@ class LogoutController extends Controller
 
     public function indexAction()
     {
+        $post = $this->request->getPost();
         // ログアウトする場合、セッション削除してトップページへ（ログインページへ）
-        if (!empty($_POST['yes']) === true){
-            session_destroy();
+        if (!empty($post['yes']) === true){
+            session_unset();
             header('Location: ../');
             exit();
-        } if (!empty($_POST['no']) === true){
+        } if (!empty($post['no']) === true){
             header('Location: ../index');
         }
     }

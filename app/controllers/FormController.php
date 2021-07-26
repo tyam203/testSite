@@ -5,35 +5,28 @@ use Phalcon\Mvc\Controller;
 class FormController extends Controller
 {
     public function indexAction(){
-        $this->view->hotelId = $this->request->getPost('hotelId');
-        $this->view->roomId = $this->request->getPost('roomId');
-        $this->view->checkInDate = $this->request->getPost('checkInDate');
-        $this->view->stayCount = $this->request->getPost('stayCount');
-        $this->view->personCount = $this->request->getPost('personCount');
-        $this->view->price = $this->request->getPost('price');
-        $id = $_SESSION['id'];
-        $users = Users::find(
-            [
-                "id = '$id'",
-                // "id = 15",
-            ]
-            );
-        $this->view->users = $users;
-        foreach($users as $user) {
-            $_SESSION['birthday'] = $user->birthday;
-            $_SESSION['gender'] = $user->gender;
-            $_SESSION['email'] = $user->email;
-            $_SESSION['tel'] = $user->tel;
-        }
+        $user = Users::findFirst($_SESSION['id']);
+            $this->view->setVars(
+                [
+                    'birthday' => $user->birthday,
+                    'gender' => $user->gender,
+                    'email' => $user->email,
+                    'tel' => $user->tel,
+                ]
+                );
     }
     public function confirmAction(){
-        $this->view->hotelId = $this->request->getPost('hotelId');
-        $this->view->roomId = $this->request->getPost('roomId');
-        $this->view->checkInDate = $this->request->getPost('checkInDate');
-        $this->view->stayCount = $this->request->getPost('stayCount');
-        $this->view->personCount = $this->request->getPost('personCount');
-        $this->view->price = $this->request->getPost('price');
-        $this->view->checkOutDate = date('Y-m-d', strtotime($this->request->getPost('checkInDate') . '+' . $this->request->getPost('stayCount') . 'day'));
+        $post = $this->request->getPost();
+        $this->view->setVars(
+            [
+                'roomId' => $_SESSION['roomId'],
+                'checkInDate' => $_SESSION['checkInDate'],
+                'stayCount' => $_SESSION['stayCount'],
+                'personCount' => $_SESSION['personCount'],
+                'price' => $post['price'],
+                'checkOutDate' => date('Y-m-d', strtotime($_SESSION['checkInDate'] . '+' . $_SESSION['stayCount'] . 'day')),
+            ]
+            );
 
         $rooms = $this
         ->modelsManager
@@ -60,21 +53,19 @@ class FormController extends Controller
         ->where(
             'Rooms.id = :roomId:',
             [
-                'roomId' => $this->request->getPost('roomId'),
-                // 'hotelId' => $hotelId,
+                'roomId' => $_SESSION['roomId'],
             ]
             )
         ->andwhere(
                 'capacity >= :personCount:',
                 [
-                    'personCount' => $this->request->getPost('personCount'),
+                    'personCount' => $_SESSION['personCount'],
                 ]
             )
         ->andwhere(
             'date = :checkInDate:',
             [
-                'checkInDate' => $this->request->getPost('checkInDate'),
-                // 'checkInDate' => $this->request->getPost('checkInDate'),
+                'checkInDate' => $_SESSION['checkInDate'],
             ]
             )
         ->getQuery()
@@ -83,17 +74,27 @@ class FormController extends Controller
         foreach($rooms as $room) {
             $hotelName = $room->hotelName;
             $roomName = $room->room_type;
-            $hotelImages = $room->hotelImages;
             $priceId = $room->priceId;
+            $price = $room->price;
         }
-        $this->view->hotelName = $hotelName;
-        $this->view->roomName = $roomName;
-        $this->view->hotelImages = $hotelImages;
-        $this->view->priceId = $priceId;
-        $this->view->name = $this->request->getPost('name');    
-        $this->view->birthday = $this->request->getPost('birthday');    
-        $this->view->gender = $this->request->getPost('gender');    
-        $this->view->email = $this->request->getPost('email');    
-        $this->view->tel = $this->request->getPost('tel');    
+        if ($post['gender'] == 1) {
+            $formedGender = '男性';
+        } else {
+            $formedGender = '女性';
+        }
+        $this->view->setVars(
+            [
+                'hotelName' => $hotelName,
+                'roomName' => $roomName,
+                'priceId' => $priceId,
+                'price' => $price,
+                'name' => $post['name'],
+                'birthday' => $post['birthday'],
+                'gender' => $post['gender'],
+                'formedGender' => $formedGender,
+                'email' => $post['email'],
+                'tel' => $post['tel'],
+            ]
+        ); 
     }
 }

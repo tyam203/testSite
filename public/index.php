@@ -9,6 +9,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Session\Manager;
 use Phalcon\Session\Adapter\Stream;
 
+date_default_timezone_set('Asia/Tokyo');
 
 // BASE_PATH：そのファイルが存在するディレクトリ
 // dirname: 親ディレクトリのパスを返す

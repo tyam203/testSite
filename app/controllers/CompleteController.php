@@ -6,85 +6,61 @@ class CompleteController extends Controller
 {
     public function indexAction()
     {  
-        date_default_timezone_set('Asia/Tokyo');
-        $reservation = new Reservations();
-        $reservation->assign(
-            [
-            'id' => null,
-            'checkInDate' => $_POST['checkInDate'],
-            'checkOutDate' => $_POST['checkOutDate'],
-            'personCount' => $_POST['personCount'],
-            'price' => $_POST['price'],
-            'roomId' => $_POST['roomId'],
-            'userId' => $_POST['userId'],
-            'name' => $_POST['name'],
-            'gender' => $_POST['gender'],
-            'birthday' => $_POST['birthday'],
-            'email' => $_POST['email'],
-            'phoneNumber' => $_POST['tel'],
-            'status' => 'reserved',
-            'bookingDate'=> date('Y-m-d H:i:s'),
-            ]
-        );
-        
-        $success = $reservation->save();
-        
-        $this->view->success = $success;
-        
-        if($success) {
-            $message = '予約が完了しました';
-        } else {
-            $message = 'Sorry, the following problems were generated:<br>'
-            . implode('<br>', $reservation->getMessages());
-        }
-        
-        $this->view->message = $message;
+        if($this->request->isPost()){
+            try{
+                $post = $this->request->getPost();
+                $this->db->begin();
 
-        $phql = "
-            UPDATE Prices
-            SET
-                stock = stock - 1
-            WHERE
-                id = :priceId:";
-
-        $records  = $this
-            ->modelsManager
-            ->executeQuery(
-                $phql,
+                $price = Prices::findFirst(
                 [
-                    'priceId' => $_POST['priceId'],
-                ]
-                )
-        ;
+                      'conditions' => 'id = :priceId:',
+                      'bind' => [
+                          'priceId' => $post['priceId'],
+                    ]
+                  ]
+                );
+                if($price->stock > 0) {
+                    $price->stock -= 1;
+                    $result = $price->save();
+                } else {
+                    throw new Exception('予約手続き中に空室がなくなりました');
+                }
+                if (false === $result) {
+                    throw new Exception('予約に失敗しました');
+                }
+                
+                $reservation = new Reservations();
+                $reservation->assign(
+                    [
+                        'checkInDate' => $post['checkInDate'],
+                        'checkOutDate' => $post['checkOutDate'],
+                        'personCount' => $post['personCount'],
+                        'price' => $post['price'],
+                        'roomId' => $post['roomId'],
+                        'userId' => $post['userId'],
+                        'name' => $post['name'],
+                        'gender' => $post['gender'],
+                        'birthday' => $post['birthday'],
+                        'email' => $post['email'],
+                        'phoneNumber' => $post['tel'],
+                        'status' => 'reserved',
+                        'bookingDate'=> date('Y-m-d H:i:s'),
+                    ]
+                );        
+                $result = $reservation->save();
+                if (false === $result) {
+                    throw new Exception('予約に失敗しました');
+                }
 
-        // $price = Prices::find(
-        //     [
-        //         "roomId = 1",
-        //         "date = 2021-06-01",
-        //     ]
-        //     );
-        // $price = Prices::find("id = $_POST['priceId']");
+                $success = $this->db->commit();
+                $this->view->message = '予約が完了しました';
+                unset($_SESSION['roomId'], $_SESSION['personCount'], $_SESSION['stayCount'], $_SESSION['checkInDate']);
+            } catch(Exception $ex) {
+                $this->db->rollBack();
+                $this->view->message = $ex->getMessage();
+            }
 
-        // $price->stock = 15;
-        // $price->update();
+        }
     }
     
 }
-// null,
-// $this->request->getPost(),
-// [
-//     'checkInDate',
-//     'checkOutDate',
-//     'personCount',
-//     'price',
-//     'roomId',
-//     'userId',
-//     'name',
-//     'gender',
-//     'birthday',
-//     'email',
-//     'tel',
-//     'password'
-// ],
-// 'reserved',
-// date('Y-m-d H:i:s'),
