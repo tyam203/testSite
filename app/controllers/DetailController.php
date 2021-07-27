@@ -33,7 +33,7 @@ class DetailController extends Controller
             'hotel_id = :hotelId:',
             )
         ->andwhere(
-                'capacity >= :personCount:',
+            'capacity >= :personCount:',
             )
         ->andwhere(
             'date = :checkInDate:',

@@ -7,38 +7,38 @@
     <h2>ホテル検索</h2>
         <div class="border pt-3 pl-3 pr-3 m-auto w-25">
             <?= $this->tag->form(["search", "method" => "get", "class" => "form"]) ?>
+            <div class="form-group">
+                <label>都道府県</label>
+                <select name="prefectureId" class="form-control">
+                <?php foreach ($prefectures as $prefecture) : ?>
+                        <option value="<?= $prefecture->prefectureId ?>"><?= $prefecture->prefectureName ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
                 <div class="form-group">
-                    <label>都道府県</label>
-                    <select name="prefectureId" class="form-control">
-                    <?php foreach ($prefectures as $prefecture) : ?>
-                            <option value="<?= $prefecture->prefectureId ?>"><?= $prefecture->prefectureName ?></option>
-                        <?php endforeach; ?>
+                    <label>チェックイン<span style="color: #ff0000">※必須</span></label>
+                    <?= $this->tag->dateField(array('checkInDate', 'class' =>'form-control checkInDate', 'min'=>date('Y-m-d', strtotime('+3 day')), 'value'=>date('Y-m-d', strtotime('+3 day')))) ?>
+                </div>
+                
+                <div class="form-group">
+                    <label>泊数</label>
+                    <?php $options = array('1' => '1泊') ?>
+                    <?php echo $this->tag->selectStatic(array('stayCount', $options, 'class' =>'form-control')) ?>
                     </select>
                 </div>
-
-                    <div class="form-group">
-                        <label>チェックイン<span style="color: #ff0000">※必須</span></label>
-                        <?= $this->tag->dateField(array('checkInDate', 'class' =>'form-control checkInDate', 'min'=>date('Y-m-d', strtotime('+3 day')), 'value'=>date('Y-m-d', strtotime('+3 day')))) ?>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>泊数</label>
-                        <?php $options = array('1' => '1泊') ?>
-                        <?php echo $this->tag->selectStatic(array('stayCount', $options, 'class' =>'form-control')) ?>
-                        </select>
-                    </div>
+            
+                <div class="form-group mb-3">
+                    <label>人数</label>
+                    <select class="form-control" name="personCount">
+                        <?php makeOptions(1, 6, '名') ?>
+                    </select>
+                </div>
                 
-                    <div class="form-group mb-3">
-                        <label>人数</label>
-                        <select class="form-control" name="personCount">
-                            <?php makeOptions(1, 6, '名') ?>
-                        </select>
-                    </div>
-                    
-                    <div class="text-center mb-2">
-                        <button type="submit" class="btn btn-primary btn-sm">検索する</button>
-                    </div>
-                    </form>
+                <div class="text-center mb-2">
+                    <button type="submit" class="btn btn-primary btn-sm">検索する</button>
+                </div>
+            </form>
         </div>
     </div>
     

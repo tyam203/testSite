@@ -6,7 +6,7 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        if(isset($_SESSION['id'])){
+        if(isset($_SESSION['id'])) {
             $name = $_SESSION['name'];
             $link = $this->tag->linkTo(["logout", "ログアウト", 'class' => 'btn btn-primary']); 
         } else{

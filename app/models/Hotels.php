@@ -8,11 +8,4 @@ class Hotels extends Model
     {
         $this->setSource('hotels');
     }
-    // public $id;
-    // public $hotelName;
-    // public $prefectureId;
-    // public $prefectureName;
-    // public $hotelImages;
-
-    // }
 }
