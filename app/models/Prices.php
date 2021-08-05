@@ -6,7 +6,11 @@ class Prices extends Model
 {
     public function initialize()
     {
-        $this->setSource('prices');
+        $this->belongsTo(
+            'roomId',
+            Rooms::class,
+            'id',
+        );
     }
 
 }

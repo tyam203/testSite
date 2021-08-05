@@ -8,5 +8,18 @@ class Users extends Model
     {
         $this->setSource('users');
     }
+    // public static function checkRegistration($email, $password)
+    // {
+    //     $conditions ="email = :email: AND password = :password:";
+    //     $parameters = array(
+    //         'email' => $email,
+    //         'password' => $password,
+    //     );
+    //     $user = Users::findFirst(array(
+    //         $conditions,
+    //         'bind' => $parameters
+    //     ));
+    //     return $user;
+    // }
 }
 

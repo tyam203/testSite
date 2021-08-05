@@ -3,22 +3,22 @@
 <div class="text-left border m-5 p-3">
     <h3><?= date('Y年n月j日', strtotime($checkInDate)) ?></h3>
     <div class="text-left border p-3">
-        <h3><?= $hotelName ?></h3>
+        <h3><?= $room->hotelName ?></h3>
         <div class="container">
             <div class="row">
                 <div class="col">
                     <h4>1部屋・<?= $stayCount ?>泊</h4>
-                    <p>部屋タイプ：<?= $roomType ?></p>
+                    <p>部屋タイプ：<?= $room->room_type ?></p>
                 </div>
                 <div class="col text-right">
-                    <?= $this->tag->form(["search", "method" => "get", "class" => "mb-3"]); ?>
-                        <input type="hidden" name="prefectureId" value="<?= $prefectureId; ?>">
+                    <?= $this->tag->form(["search/result", "method" => "get", "class" => "mb-3"]); ?>
+                        <input type="hidden" name="prefectureId" value="<?= $room->prefectureId; ?>">
                         <input type="hidden" name="checkInDate" value="<?= $checkInDate; ?>">
                         <input type="hidden" name="stayCount" value="<?= $stayCount; ?>">
                         <input type="hidden" name="personCount" value="<?= $personCount; ?>">
                         <button type="submit" class="btn btn-secondary">ホテル変更</button>
                     </form>
-                    <?= $this->tag->form(["detail", "method" => "get"]); ?>
+                    <?= $this->tag->form(["search/hotelPlan", "method" => "get"]); ?>
                         <input type="hidden" name="hotelId" value="<?= $hotelId; ?>">
                         <input type="hidden" name="checkInDate" value="<?= $checkInDate; ?>">
                         <input type="hidden" name="stayCount" value="<?= $stayCount; ?>">
@@ -30,12 +30,12 @@
         </div>
 
         <p>内訳（大人<?= $personCount?>名）</p>
-        <h4>合計金額：<?= number_format($price)?>円</h4>
+        <h4>合計金額：<?= number_format($room->price)?>円</h4>
         <div class="text-center">
             <?php if(isset($_SESSION['id'])): ?>
-            <?= $this->tag->form(["form", "method" => "post"]) ?>
+            <?= $this->tag->form(["reservation/form", "method" => "post"]) ?>
             <?php else: ?>
-            <?= $this->tag->form(["select", "method" => "post"]) ?>
+            <?= $this->tag->form(["customer/select", "method" => "post"]) ?>
             <?php endif; ?>
             <button type="submit" class="btn btn-warning btn-lg">この内容で申し込む</button>
             </form>

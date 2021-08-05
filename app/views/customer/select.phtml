@@ -6,17 +6,18 @@
 
 <div class="row">
     <div class="col border p-5">
-        <?php echo $this->tag->form("select/check"); ?>
+        <?php echo $this->tag->form("customer/checkLogin"); ?>
+        <!-- <?php echo $this->tag->form("select/check"); ?> -->
             <h3>会員登録がお済みのお客様</h3>
             <p>会員のログインID/パスワードでログインしてください。</p>
             <p>
               <label for="email">メールアドレス</label>
-              <?php echo $this->tag->textField("email"); ?>
+              <?php echo $this->tag->textField(array('email', 'value' => $email)); ?>
             </p>
           
           <p>
               <label for="password">パスワード</label>
-              <?php echo $this->tag->passwordField("password"); ?>
+              <?php echo $this->tag->passwordField(array('password', 'value' => $password)); ?>
           </p>
 
                 <div class="mt-3">
@@ -29,7 +30,7 @@
             <h3 class=>新規会員登録するお客様</h3>
                 <p>予約と同時に新規登録を行ってください。</p>
             <div class="mb-5">
-            <a href="../signup">
+            <a href="signup">
                 <button class="btn btn-warning">会員登録して予約</button>
             </a>
             </div>

@@ -1,54 +1,44 @@
-<h2>検索結果</h2>
-<?php if(!empty($hotel)): ?>
-<div class="text-center w-50 m-auto">
-<h3>検索条件</h3>
-<table class="table table-bordered table-hover">
-    <thead class="thead-light">　
-        <tr>
-            <th>都道府県</th>
-            <td><?= $prefecture ?></td>
-        </tr>
-        <tr>
-            <th>宿泊日</th>
-            <td><?= date('Y年n月j日', strtotime($checkInDate)) ?></td>
-        </tr>
-        <tr>
-            <th>泊数</th>
-            <td><?= $stayCount ?>泊</td>
-        </tr>
-        <tr>
-            <th>人数</th>
-            <td><?= $personCount ?>名</td>
-        </tr>
-    </thead>
-</table>
-<?= $this->tag->linkTo(["/", "検索条件変更", 'class' => 'btn btn-primary mr-1']) ?>
+<div>
+    <p class="text-left"><?= $name ?>さん、ようこそ</p>
+    <p class="text-right mr-3"><?= $link ?></p>
 </div>
 
+    <div class="text-center">
+    <h2>ホテル検索</h2>
+        <div class="border pt-3 pl-3 pr-3 m-auto w-25">
+            <?= $this->tag->form(["search/result", "method" => "get", "class" => "form"]) ?>
+            <div class="form-group">
+                <label>都道府県</label>
+                <select name="prefectureId" class="form-control">
+                <?php foreach ($prefectures as $prefecture) : ?>
+                        <option value="<?= $prefecture->id ?>"><?= $prefecture->prefectureName ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-<div class="container mt-3">
-    <?php foreach($hotels as $hotel): ?>
-    <ul class="border list-unstyled">
-        <li class="p-3 text-center">
-            <h4><?= $hotel->hotelName ?></h4>
-            <h5>料金：<?= number_format($hotel->price) ?>円～</h5>
-            <img src="images/<?= $hotel->hotelImages ?>" width="360px" height="270px">
-            <?= $this->tag->form(["detail", "method" => "get"]) ?>
-            <input type="hidden" name="hotelId" value="<?= $hotel->hotel_id ?>">
-            <input type="hidden" name="checkInDate" value="<?= $checkInDate ?>">
-            <input type="hidden" name="stayCount" value="<?= $stayCount ?>">
-            <input type="hidden" name="personCount" value="<?= $personCount ?>">
-            <button type="submit" class="btn btn-primary mt-3">部屋タイプ一覧を見る</button>
-            <?= $this->tag->endForm(); ?>
-        </li>
-    </ul>
-    <?php endforeach; ?>
-</div>    
-
-<?php else: ?>
-<div class="text-center">
-<p>条件に一致するホテルがありませんでした</p>
-<p>条件を変更して再度検索してください</p>
-<?= $this->tag->linkTo(["/", "検索条件変更", 'class' => 'btn btn-primary mr-1']) ?>
-</div>
-<?php endif; ?>
+                <div class="form-group">
+                    <label>チェックイン<span style="color: #ff0000">※必須</span></label>
+                    <?= $this->tag->dateField(array('checkInDate', 'class' =>'form-control checkInDate', 'min'=>date('Y-m-d', strtotime('+3 day')), 'value'=>date('Y-m-d', strtotime('+3 day')))) ?>
+                </div>
+                
+                <div class="form-group">
+                    <label>泊数</label>
+                    <?php $options = array('1' => '1泊') ?>
+                    <?php echo $this->tag->selectStatic(array('stayCount', $options, 'class' =>'form-control')) ?>
+                    </select>
+                </div>
+            
+                <div class="form-group mb-3">
+                    <label>人数</label>
+                    <select class="form-control" name="personCount">
+                        <?php makeOptions(1, 6, '名') ?>
+                    </select>
+                </div>
+                
+                <div class="text-center mb-2">
+                    <button type="submit" class="btn btn-primary btn-sm">検索する</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    

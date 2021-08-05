@@ -9,11 +9,11 @@
         <tbody>
 					<tr>
 						<th scope="row">ホテル名</th>
-						<td><?= $hotelName ?></td>
+						<td><?= $room->hotelName ?></td>
 					</tr>
 					<tr>
 						<th scope="row">部屋タイプ</th>
-						<td><?= $roomName ?></td>
+						<td><?= $room->room_type ?></td>
 					</tr>
 					<tr>
 						<th scope="row">チェックイン日</th>
@@ -29,7 +29,7 @@
 					</tr>
 					<tr>
 						<th scope="row">合計金額</th>
-						<td><?= number_format($price) ?>円</td>
+						<td><?= number_format($room->price) ?>円</td>
 					</tr>
 				</tbody>
 			</table>
@@ -64,13 +64,13 @@
 	</div>
 </div>
 <div class="text-center">
-<?php echo $this->tag->form("complete"); ?>
+<?php echo $this->tag->form("reservation/complete"); ?>
 	<input type="hidden" name="roomId" value="<?= $roomId ?>">
 	<input type="hidden" name="checkInDate" value="<?= $checkInDate ?>">
 	<input type="hidden" name="checkOutDate" value="<?= $checkOutDate ?>">
 	<input type="hidden" name="personCount" value="<?= $personCount ?>">
-	<input type="hidden" name="price" value="<?= $price ?>">
-	<input type="hidden" name="priceId" value="<?= $priceId ?>">
+	<input type="hidden" name="price" value="<?= $room->price ?>">
+	<input type="hidden" name="priceId" value="<?= $room->priceId ?>">
 	<input type="hidden" name="name" value="<?= $name ?>">
 	<input type="hidden" name="gender" value="<?= $gender ?>">
 	<input type="hidden" name="birthday" value="<?= $birthday ?>">

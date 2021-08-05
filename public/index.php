@@ -8,6 +8,8 @@ use Phalcon\Mvc\Application;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Session\Manager;
 use Phalcon\Session\Adapter\Stream;
+use Phalcon\Escaper;
+use Phalcon\Flash\Session as FlashSession;
 
 date_default_timezone_set('Asia/Tokyo');
 
@@ -76,19 +78,20 @@ $container->set(
         );
     }
 );
-// session_start();
 
-$session = new Manager();
-$files = new Stream(
-    [
-        // 'savePath' => 'N;MODE;/path',
-        'savePath' => 'C:\php72\tmp',
-        // 'savePath' => '/tmp',
-
-    ]
-);
-$session->setAdapter($files);
-$session->start();
+$container->set('session', function() {
+    $session = new Manager();
+    $files = new Stream(
+        [
+            'savePath' => 'C:\php72\tmp',
+        ]
+    );
+    $session->setAdapter($files);
+    $escaper = new Escaper();
+    $flash   = new FlashSession($escaper, $session);
+    $session->start();
+    return $session;
+});
 
 try {
 

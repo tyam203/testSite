@@ -1,7 +1,7 @@
 <div class="text-center border m-5 p-3">
-    <h2><?= $hotelName ?></h2>
+    <h2><?= $room->hotelName ?></h2>
     <div class="text-center mb-5">
-        <img src="images/<?= $hotelImages ?>" width="480px" height="360px">
+        <img src="../images/<?= $room->hotelImages ?>" width="480px" height="360px">
     </div>
     <?php foreach($rooms as $room): ?>
     <div class="mb-5">
@@ -15,7 +15,7 @@
                 <h4>合計：<span style="color: #ff0000;">¥<?= number_format($room->price) ?></span></h4>
                 <p>(1部屋/1泊/<?= $personCount ?>名)</p>
             </div>
-            <?= $this->tag->form(["detail/confirm", "method" => "get"]) ?>
+            <?= $this->tag->form(["search/confirm", "method" => "get"]) ?>
             <input type="hidden" name="roomId" value="<?= $room->roomId ?>">
             <input type="hidden" name="hotelId" value="<?= $this->request->get('hotelId') ?>">
             <input type="hidden" name="checkInDate" value="<?= $this->request->get('checkInDate') ?>">
